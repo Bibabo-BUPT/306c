@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中央空调管理员设置默认值</title>
+</head>
+<body>
+<form action="/administrator/" method="post">
+    请输入默认温度<br>
+    <input type="text" name="default_temper"><br>
+    请输入默认风速<br>
+    <input type="radio" name="default_speed" value="low" checked>low
+    <br>
+    <input type="radio" name="default_speed" value="mid" >mid
+    <br>
+    <input type="radio" name="default_speed" value="high" high>high
+    请输入默认模式<br>
+    <input type="radio" name="default_mode" value="hot" checked>hot
+    <input type="radio" name="default_mode" value="cool" >cool
+    <br>
+    <button>提交</button>
+</form>
+</body>
+</html>
