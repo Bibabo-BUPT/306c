@@ -5,8 +5,15 @@
     <title>空调管理员</title>
 </head>
 <body>
-
-
+{% for singal in serverqueuelist %}
+<h1>状态：{{singal.state}}</h1>
+<h1>模式：{{singal.mode}}</h1>
+<h1>目标温度：{{singal.target_temper}}</h1>
+<h1>当前费用：{{singal.current_fee}}</h1>
+<h1>风速：{{singal.speed}}</h1>
+<h1>累计费用：{{singal.total_fee}}</h1>
+<h1>房间号：{{singal.room_no}}</h1>
+{% endfor %}
 <button>关机</button>
 
 </body>

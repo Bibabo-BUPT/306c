@@ -1,12 +1,12 @@
 class sub_controller:
     def __init__(self,state,mode,speed,target_temper,current_fee,total_fee,room_no):
-        self.state=state
-        self.mode=mode
-        self.speed=speed
+        self.state=state #0代表空闲，1代表待调度，2代表在提供服务
+        self.mode=mode #0代表制热，1代表制冷
+        self.speed=speed #0代表低风，1代表中风，2代表高风
         self.target_temper=target_temper
         self.current_fee=current_fee
         self.total_fee=total_fee
-        self.room_no=room_no
+        self.room_no=room_no #范围为101~105
 
     def timer_begin(self,room_no):
         return 0

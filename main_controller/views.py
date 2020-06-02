@@ -16,11 +16,15 @@ import detailed_list_room
 
 # Create your views here.
 set_default_time = 0
+serverqueuelist=[]
+serverqueue = server_queue.server_queue(0,serverqueuelist)
+
 def room(request):
     return render(request,'room.html')
 
 def administrator(request):
-    return render(request,'administrator.html')
+    print(serverqueuelist)
+    return render(request, 'administrator.html',{'serverqueuelist':serverqueuelist})
 
 def power_on_html(request):
 
@@ -54,6 +58,29 @@ def set_default_html(request):
                 if int(default_temper) < 18 or int(default_temper) >25:
                     return render(request, 'set_default.html', {'msg': '请输入正确温度'})
                 else:
+                    if default_speed == 'low':
+                        speed = 0
+                    elif default_speed == 'mid':
+                        speed = 1
+                    else:
+                        speed = 2
+
+                    if default_mode == 'hot':
+                        mode = 0
+                    else:
+                        mode = 1
+                    #print(speed)
+                    #print(mode)
+                    for room_no in range(1,6):
+                        new_sub_controller =  sub_controller.sub_controller(0,mode,speed,default_temper,0,0,room_no+100)
+                        #print(new_sub_controller.room_no)
+                        #print(new_sub_controller.room_no)
+                        #print(new_sub_controller.mode)
+                        #print(new_sub_controller.speed)
+                        #print(new_sub_controller.target_temper)
+                        serverqueuelist.append(new_sub_controller)
+                    #print(serverqueue)
+                    #print(serverqueuelist)
                     return redirect('/administrator/')
 
 
@@ -61,6 +88,26 @@ def set_default_html(request):
                 if int(default_temper) < 25 or int(default_temper) > 30:
                     return render(request, 'set_default.html', {'msg': '请输入正确温度'})
                 else:
+                    if default_speed == 'low':
+                        speed = 0
+                    elif default_speed == 'mid':
+                        speed = 1
+                    else:
+                        speed = 2
+
+                    if default_mode == 'hot':
+                        mode = 0
+                    else:
+                        mode = 1
+                    # print(speed)
+                    # print(mode)
+                    for room_no in range(1, 6):
+                        new_sub_controller = sub_controller.sub_controller(0, mode, speed, default_temper, 0, 0,
+                                                                           room_no + 100)
+                        # print(new_sub_controller.room_no)
+                        serverqueuelist.append(new_sub_controller)
+                    # print(serverqueue)
+                    # print(serverqueuelist)
                     return redirect('/administrator/')
 
 def login(request):
