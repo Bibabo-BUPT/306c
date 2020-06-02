@@ -3,7 +3,46 @@
   <component name="ChangeListManager">
     <list default="true" id="c12ecfb3-aa72-4839-becb-7c253928a980" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/.idea/webResources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/.idea/软工作业.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/软工作业/306c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/bill.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/customer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/daily_record.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/detailed_list_customer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/detailed_list_room.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/detailed_record.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/dispatch_queue.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/main_controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/room.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/screen.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/server_queue.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/sub_controller.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/templates/administrator.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/templates/login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/templates/power_on.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/templates/room.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/templates/set_default.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/views.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/main_controller/weekly_record.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/templates/room.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/软工作业/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/软工作业/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/软工作业/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/软工作业/软工作业/wsgi.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +152,7 @@
       <workItem from="1590925231389" duration="29150000" />
       <workItem from="1591006158535" duration="148000" />
       <workItem from="1591058129516" duration="4000" />
-      <workItem from="1591058157047" duration="4741000" />
+      <workItem from="1591058157047" duration="5446000" />
     </task>
     <servers />
   </component>
