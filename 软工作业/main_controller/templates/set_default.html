@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <title>中央空调管理员设置默认值</title>
 </head>
+<script language="JavaScript" type="text/javascript">
+function clearNoNum(obj){   obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+ obj.value = obj.value.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+  obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+}
+</script>
 <body>
-<form action="/administrator/" method="post">
-    请输入默认温度<br>
-    <input type="text" name="default_temper"><br>
+<form action="/set_default/" method="post">
+    请输入默认温度（如果是制热模式，温度应在18~25℃，如果是制冷模式，温度应在25~30℃）<br>
+    <input type="text" name="default_temper" oninput="value=value.replace(/[^\d]/,'')">℃<br>
     请输入默认风速<br>
     <input type="radio" name="default_speed" value="low" checked>low
     <br>
@@ -18,7 +25,12 @@
     <input type="radio" name="default_mode" value="hot" checked>hot
     <input type="radio" name="default_mode" value="cool" >cool
     <br>
-    <button>提交</button>
+    请输入计费规则<br>
+    低速风：  <input type="text" name="feerateL" oninput="clearNoNum(this)">元/分钟<br>
+    中速风：  <input type="text" name="feerateM" oninput="clearNoNum(this)">元/分钟<br>
+    高速风：  <input type="text" name="feerateH" oninput="clearNoNum(this)">元/分钟<br>
+    <button>提交</button><br>
+    {{msg}}
 </form>
 </body>
 </html>
