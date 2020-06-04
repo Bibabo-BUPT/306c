@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>打印账单</title>
+</head>
+<body>
+<form action="/reception_print_bill/" method="post">
+    <h3>请输入房间号</h3>
+    <input type="number" name="room_num"/>
+    <br>
+    <br>
+    <button>打印账单</button>
+    {% for bill_obj in bill %}
+    <h3>顾客名：{{bill_obj.customer}}</h3>
+    <h3>房间号：{{bill_obj.room_no}}</h3>
+    <h3>总费用：{{bill_obj.total_fee}}</h3>
+    {% endfor %}
+</form>
+<br>
+<form action="/reception_print_detail/" method="post">
+    <button>打印详单</button>
+</form>
+</body>
+</html>

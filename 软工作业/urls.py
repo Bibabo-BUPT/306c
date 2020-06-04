@@ -24,4 +24,8 @@ urlpatterns = [
     path('power_on/',views.power_on_html),
     path('set_default/',views.set_default_html),
     path('login/',views.login),
+    path('reception_login/',views.reception_login),
+    path('reception_print/',views.reception_print),
+    path('reception_print_bill/',views.reception_print_bill),
+    path('reception_print_detail/',views.reception_print_detail),
 ]
