@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>房间报表</title>
+</head>
+<body>
+        <h1>房间报表</h1>
+   <style type="text/css">
+     body
+      {
+         width:800px;
+         height :800px;
+      }
+      table
+     {
+         border-collapse :collapse ;
+     }
+     th,td
+     {
+         width:200px;
+         height:40px;
+         border :1px solid black;
+         font-size:12px;
+         text-align :center;
+     }
+    </style>
+    <table>
+        <tr>
+            <td>空调开关次数</td>
+            <td>打印详单次数</td>
+        </tr>
+        <tr>
+            <td>{{times_of_on}}</td>
+            <td>{{number_of_RDR}}</td>
+        </tr>
+    </table>
+</body>
+</html>
