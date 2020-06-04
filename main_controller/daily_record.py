@@ -1,11 +1,16 @@
-class daily_record:
-    def __init__(self,date,time,type):
-        self.date=date
-        self.time=time
-        self.type=type
+from django.shortcuts import render
+import json
 
-    def print_daily_record(self,room_no,record_type):
-        return 0
+def make_record():
+    with open('D:/python_try_web/mysite/后台数据.json', 'r', encoding='utf-8') as f:
+        daily_data = json.load(f)
+    return daily_data
 
-    def make_record(self,record_type):
-        return 0
+
+def print_daily_record(request):
+    t = make_record()
+    return render(
+        request,
+        'daily_record_manager.html',
+        {'daily_data': t}
+    )
