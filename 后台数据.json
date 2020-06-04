@@ -1,0 +1,32 @@
+[
+  {
+    "room_id": "1",
+    "times_of_on": "5",
+    "duration": "7",
+    "total_fee": "222",
+    "times_of_dispatch": "6",
+    "number_of_RDR": "2",
+    "times_of_change_temp": "12",
+    "times_of_change_speed": "5"
+  },
+  {
+    "room_id": "2",
+    "times_of_on": "9",
+    "duration": "10",
+    "total_fee": "222",
+    "times_of_dispatch": "6",
+    "number_of_RDR": "2",
+    "times_of_change_temp": "12",
+    "times_of_change_speed": "5"
+  },
+    {
+    "room_id": "1",
+    "times_of_on": "2",
+    "duration": "10",
+    "total_fee": "222",
+    "times_of_dispatch": "6",
+    "number_of_RDR": "2",
+    "times_of_change_temp": "12",
+    "times_of_change_speed": "5"
+  }
+]
