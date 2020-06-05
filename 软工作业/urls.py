@@ -17,9 +17,9 @@ from django.contrib import admin
 from django.urls import path
 from main_controller import views
 
-from . import daily_record
-from . import room
-from . import weekly_record
+from main_controller import daily_record
+from main_controller import room
+from main_controller import weekly_record
 
 
 
@@ -37,7 +37,7 @@ urlpatterns = [
     path('reception_print_bill/',views.reception_print_bill),
     path('reception_print_detail/',views.reception_print_detail),
     path(r'daily_record_manager/', daily_record.print_daily_record),
-    path(r'daily_record_manager/', room.daily_record_room),  # 查看全部信息
+    #path(r'daily_record_manager/', room.daily_record_room),  # 查看全部信息
     path(r'daily_record_room_choice/', room.find_daily_record),  # 选择界面
     path(r'weekly_record_manager/', weekly_record.print_weekly_record),
     path(r'weekly_record_room_choice/', room.find_weekly_record)
