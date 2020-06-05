@@ -32,10 +32,11 @@ urlpatterns = [
     path('login/',views.login),
     path('reception_login/',views.reception_login),
     path('reception_print/',views.reception_print),
+    path('reception_check_in/',views.reception_check_in),
+    path('reception_check_out/',views.reception_check_out),
     path('reception_print_bill/',views.reception_print_bill),
     path('reception_print_detail/',views.reception_print_detail),
     path(r'daily_record_manager/', daily_record.print_daily_record),
-
     path(r'daily_record_manager/', room.daily_record_room),  # 查看全部信息
     path(r'daily_record_room_choice/', room.find_daily_record),  # 选择界面
     path(r'weekly_record_manager/', weekly_record.print_weekly_record),

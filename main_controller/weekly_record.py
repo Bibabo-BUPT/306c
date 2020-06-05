@@ -3,7 +3,7 @@ import json
 
 
 def make_record():
-    with open('D:/python_try_web/mysite/后台数据.json', 'r', encoding='utf-8') as f:
+    with open('E:/codes/306c/后台数据.json', 'r', encoding='utf-8') as f:
         weekly_data = json.load(f)
     return weekly_data
 

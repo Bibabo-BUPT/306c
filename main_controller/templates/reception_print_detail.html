@@ -5,6 +5,23 @@
     <title>打印详单</title>
 </head>
 <body>
+<form action="/reception_check_in/" method="post">
+    <h3>请输入房间号</h3>
+    <input type="number" name="room_num"/>
+    <br>
+    <br>
+    <button>办理入住</button>
+    <br>
+</form>
+<br>
+<form action="/reception_check_out/" method="post">
+    <h3>请输入房间号</h3>
+    <input type="number" name="room_num"/>
+    <br>
+    <br>
+    <button>办理退房</button>
+</form>
+<br>
 <form action="/reception_print_bill/" method="post">
     <h3>请输入房间号</h3>
     <input type="number" name="room_num"/>
@@ -14,6 +31,10 @@
 </form>
 <br>
 <form action="/reception_print_detail/" method="post">
+    <h3>请输入房间号</h3>
+    <input type="number" name="room_num"/>
+    <br>
+    <br>
     <button>打印详单</button>
     <table border="1">
         <thead>

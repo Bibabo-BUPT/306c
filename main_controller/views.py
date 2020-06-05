@@ -21,6 +21,7 @@ set_default_time = 0
 serverqueuelist=[]
 serverqueue = server_queue.server_queue(0,serverqueuelist)
 
+room_num_list=[]#room_num_list是已办理入住的房间列表
 bill_list=[]
 detailed_record_list=[]
 #customer[]=customer.customer(id,room_no,total_fee)
@@ -146,6 +147,40 @@ def reception_login(request):
 def reception_print(request):
     return render(request,'reception_print.html')
 
+#前台登记入住
+def reception_check_in(request):
+    if request.method=="GET":
+        return HttpResponse('please visit us with POST')
+    else:
+        room_no=request.POST.get('room_num')
+        flag=1
+        for i in room_num_list:
+            if room_no==i:
+                msg='此房间已有人入住，入住失败，请换一个房间'
+                flag=0
+                break
+        if flag==1:
+            msg='此房间无人入住，入住成功'
+            room_num_list.append(room_no)
+        return render(request,'reception_check_in.html',{'msg':msg})
+
+#前台登记退房
+def reception_check_out(request):
+    if request.method=="GET":
+        return HttpResponse('please visit us with POST')
+    else:
+        room_no=request.POST.get('room_num')
+        flag=1
+        for i in room_num_list:
+            if room_no==i:
+                msg='退房成功'
+                flag=0
+                break
+        if flag==1:
+            msg='此房间无人入住，退房失败'
+            room_num_list.remove(room_no)
+        return render(request,'reception_check_out.html',{'msg':msg})
+
 #前台打印账单界面（账单数据是我自己写的test，之后应该从bill中（数据库中）获得）
 def reception_print_bill(request):
     if request.method == "GET":
@@ -153,7 +188,8 @@ def reception_print_bill(request):
     else:
         #test
         customer='abc'
-        room_no='c104'
+        room_no=request.POST.get('room_num')
+        print(room_no)
         total_fee=100
         print(bill_list)
         new_bill=bill.bill(customer,room_no,total_fee)
@@ -170,7 +206,7 @@ def reception_print_detail(request):
     else:
         #test
         detail_count='1'
-        room_no='105'
+        room_no=request.POST.get('room_num')
         request_time='2020/06/04 13:59'
         duration='6'
         temper='20'
