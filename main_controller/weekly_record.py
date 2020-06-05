@@ -3,7 +3,7 @@ import json
 
 
 def make_record():
-    with open('E:/codes/306c/后台数据.json', 'r', encoding='utf-8') as f:
+    with open('C:/Users/74546/Desktop/python_try_web/mysite/后台数据.json', 'r', encoding='utf-8') as f:
         weekly_data = json.load(f)
     return weekly_data
 
@@ -37,11 +37,12 @@ def puls_data(room_id):    #往后加7个
     return dict1
 
 
+
 def print_weekly_record(request):
-    w = puls_data(1)    #   假设房间号为1
-    # print(w)
+    dic = puls_data(1)
+    print(dic)
     return render(
         request,
         'weekly_record_manager.html',
-        w
+        dic
     )

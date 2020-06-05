@@ -2,7 +2,7 @@ from django.shortcuts import render
 import json
 
 def make_record():
-    with open('D:/python_try_web/mysite/后台数据.json', 'r', encoding='utf-8') as f:
+    with open('C:/Users/74546/Desktop/python_try_web/mysite/后台数据.json', 'r', encoding='utf-8') as f:
         daily_data = json.load(f)
     return daily_data
 

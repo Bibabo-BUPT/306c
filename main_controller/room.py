@@ -32,20 +32,24 @@ def create_dlc(self):
 # 若输入的值为1显示费用，使用时间
 # 若输入的值为2显示空调开关次数，打印详单次数
 # 若输入的值为3显示温度改变次数，风速改变次数
-# 若为其他值显示被调度的次数
+# 若输入的值为4显示被调度的次数
+# 若输入其他值显示该房间的全部信息
 
-def get_daily_record(self):  # 从json中获取信息
-    with open('D:/python_try_web/mysite/后台数据.json', 'r', encoding='utf-8') as f:
+
+def get_daily_record():         #   从json中获取信息
+    with open('C:/Users/74546/Desktop/python_try_web/mysite/后台数据.json', 'r', encoding='utf-8') as f:
         daily_data = json.load(f)
     return daily_data
 
-def daily_record_room(request):  # 查看每日全部信息
+
+def daily_record_room(request):         #   查看每日全部信息
     t = get_daily_record()
     return render(
         request,
         'daily_record_manager.html',
         {'daily_data': t}
     )
+
 
 def get_detail_record(room_id, choice):
     t = get_daily_record()
@@ -72,15 +76,26 @@ def get_detail_record(room_id, choice):
                 value_dic_3 = [i['times_of_change_temp'], i['times_of_change_speed']]
                 dict3 = dict(zip(key_dic_3, value_dic_3))
                 return dict3
-        return 1  # 没有该房间号
-    else:
+        return 1    #没有该房间号
+    elif choice == 4:
         for i in t:
             if int(i['room_id']) - int(room_id) == 0:
                 key_dic_4 = ['times_of_dispatch']
                 value_dic_4 = [i['times_of_dispatch']]
                 dict4 = dict(zip(key_dic_4, value_dic_4))
                 return dict4
+        return 1    #没有该房间号
+    else:
+        for i in t:
+            if int(i['room_id']) - int(room_id) == 0:
+                key_dic = ['room_id', 'times_of_on', 'duration', 'total_fee', 'times_of_dispatch', 'number_of_RDR',
+                            'times_of_change_temp', 'times_of_change_speed']
+                value_dic = [i['room_id'], i['times_of_on'], i['duration'], i['total_fee'], i['times_of_dispatch'],
+                            i['number_of_RDR'], i['times_of_change_temp'], i['times_of_change_speed']]
+                dictm = dict(zip(key_dic, value_dic))
+            return dictm
         return 1  # 没有该房间号
+
 
 def find_daily_record(request):
     # print(request.method)
@@ -97,7 +112,7 @@ def find_daily_record(request):
         room_id_test = int(room_id_test)
         t = get_detail_record(room_id_test, choice_test)
         print(t)
-        if t == 1:  # 房间没找到，返回原来界面
+        if t == 1:       #房间没找到，返回原来界面
             return render(request, 'daily_record_room_choice.html')
         else:
             if int(choice_test) == 1:
@@ -105,7 +120,7 @@ def find_daily_record(request):
                     request,
                     'daily_record_room.html',
                     get_detail_record(room_id_test, choice_test)
-                )
+                    )
             elif choice_test == 2:
                 return render(
                     request,
@@ -118,19 +133,28 @@ def find_daily_record(request):
                     'daily_record_room_2.html',
                     get_detail_record(room_id_test, choice_test)
                 )
-            else:
+            elif choice_test == 4:
                 return render(
                     request,
                     'daily_record_room_3.html',
                     get_detail_record(room_id_test, choice_test)
                 )
+            else:
+                return render(
+                    request,
+                    'daily_record_room_4.html',
+                    get_detail_record_weekly(room_id_test, choice_test)
+                )
 
-def get_weekly_record():  # 从json中获取信息
+
+
+def get_weekly_record():         #   从json中获取信息
     with open('D:/python_try_web/mysite/后台数据.json', 'r', encoding='utf-8') as f:
         weekly_data = json.load(f)
     return weekly_data
 
-def puls_data(room_id):  # 往后加7个
+
+def puls_data(room_id):    #往后加7个
     t = get_weekly_record()
     count = 0
     now_id = room_id
@@ -141,8 +165,7 @@ def puls_data(room_id):  # 往后加7个
     now_RDR = 0
     now_change_temp = 0
     now_change_speed = 0
-    key_dic = ['room_id', 'times_of_on', 'duration', 'total_fee', 'times_of_dispatch', 'number_of_RDR',
-               'times_of_change_temp', 'times_of_change_speed']
+    key_dic = ['room_id', 'times_of_on', 'duration', 'total_fee', 'times_of_dispatch', 'number_of_RDR', 'times_of_change_temp', 'times_of_change_speed']
     for i in t:
         if int(i['room_id']) == room_id:
             now_on = int(i['times_of_on']) + now_on
@@ -155,10 +178,10 @@ def puls_data(room_id):  # 往后加7个
             count = count + 1
             if count == 6:
                 break
-    value_dic = [now_id, now_on, now_duration, now_total_fee, now_dispatch, now_RDR, now_change_temp,
-                 now_change_speed]
+    value_dic = [now_id, now_on, now_duration, now_total_fee, now_dispatch, now_RDR, now_change_temp, now_change_speed]
     dict1 = dict(zip(key_dic, value_dic))
     return dict1
+
 
 def get_detail_record_weekly(room_id, choice):
     t = puls_data(room_id)
@@ -182,14 +205,24 @@ def get_detail_record_weekly(room_id, choice):
             value_dic_3 = [t['times_of_change_temp'], t['times_of_change_speed']]
             dict3 = dict(zip(key_dic_3, value_dic_3))
             return dict3
-        return 1  # 没有该房间号
-    else:
+        return 1    #没有该房间号
+    elif choice == 4:
         if int(t['room_id']) - int(room_id) == 0:
             key_dic_4 = ['times_of_dispatch']
             value_dic_4 = [t['times_of_dispatch']]
             dict4 = dict(zip(key_dic_4, value_dic_4))
             return dict4
+        return 1    #没有该房间号
+    else:
+        if int(t['room_id']) - int(room_id) == 0:
+            key_dic = ['room_id', 'times_of_on', 'duration', 'total_fee', 'times_of_dispatch', 'number_of_RDR',
+                       'times_of_change_temp', 'times_of_change_speed']
+            value_dic = [t['room_id'], t['times_of_on'], t['duration'], t['total_fee'], t['times_of_dispatch'],
+                         t['number_of_RDR'], t['times_of_change_temp'], t['times_of_change_speed']]
+            dictm = dict(zip(key_dic, value_dic))
+            return dictm
         return 1  # 没有该房间号
+
 
 def find_weekly_record(request):
     # print(request.method)
@@ -207,7 +240,7 @@ def find_weekly_record(request):
         t = get_detail_record_weekly(room_id_test, choice_test)
 
         print(t)
-        if t == 1:  # 房间没找到，返回原来界面
+        if t == 1:       #房间没找到，返回原来界面
             return render(request, 'weekly_record_room_choice.html')
         else:
             if int(choice_test) == 1:
@@ -215,7 +248,7 @@ def find_weekly_record(request):
                     request,
                     'daily_record_room.html',
                     get_detail_record_weekly(room_id_test, choice_test)
-                )
+                    )
             elif choice_test == 2:
                 return render(
                     request,
@@ -228,9 +261,15 @@ def find_weekly_record(request):
                     'daily_record_room_2.html',
                     get_detail_record_weekly(room_id_test, choice_test)
                 )
-            else:
+            elif choice_test == 4:
                 return render(
                     request,
                     'daily_record_room_3.html',
+                    get_detail_record_weekly(room_id_test, choice_test)
+                )
+            else:
+                return render(
+                    request,
+                    'weekly_record_manager.html',
                     get_detail_record_weekly(room_id_test, choice_test)
                 )
