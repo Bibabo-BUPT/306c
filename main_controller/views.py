@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-import room
+from main_controller import room
 import customer
 import bill
 import detailed_record
@@ -14,6 +14,7 @@ import dispatch_queue
 import controller
 import detailed_list_customer
 import detailed_list_room
+from . import models
 
 
 # Create your views here.
@@ -45,12 +46,6 @@ def set_default_html(request):
         feerateL = request.POST.get('feerateL')
         feerateM = request.POST.get('feerateM')
         feerateH = request.POST.get('feerateH')
-        print(default_temper)
-        print(default_speed)
-        print(default_mode)
-        print(feerateL)
-        print(feerateM)
-        print(feerateH)
         global set_default_time
         if set_default_time == 0:
             set_default_time = set_default_time + 1
@@ -58,61 +53,81 @@ def set_default_html(request):
         else:
             if request.POST.get('default_temper') == '' or request.POST.get('feerateL') == '' or request.POST.get('feerateM') == '' or request.POST.get('feerateH') == '' :
                 return render(request, 'set_default.html',{'msg':'请输入所有信息'})
-            if request.POST.get('default_mode') == 'hot':
-                if int(default_temper) < 18 or int(default_temper) >25:
-                    return render(request, 'set_default.html', {'msg': '请输入正确温度'})
+            if request.POST.get('default_mode') == 'hot' and (int(default_temper) < 18 or int(default_temper) >25) :
+                return render(request, 'set_default.html', {'msg': '请输入正确温度'})
+            if request.POST.get('default_mode') == 'cool' and (int(default_temper) < 25 or int(default_temper) > 30):
+                return render(request, 'set_default.html', {'msg': '请输入正确温度'})
+            else:
+                if default_speed == 'low':
+                    speed = 0
+                elif default_speed == 'mid':
+                    speed = 1
                 else:
-                    if default_speed == 'low':
-                        speed = 0
-                    elif default_speed == 'mid':
-                        speed = 1
-                    else:
-                        speed = 2
+                    speed = 2
 
-                    if default_mode == 'hot':
-                        mode = 0
-                    else:
-                        mode = 1
-                    #print(speed)
-                    #print(mode)
-                    for room_no in range(1,6):
-                        new_sub_controller =  sub_controller.sub_controller(0,mode,speed,default_temper,0,0,room_no+100)
-                        #print(new_sub_controller.room_no)
-                        #print(new_sub_controller.room_no)
-                        #print(new_sub_controller.mode)
-                        #print(new_sub_controller.speed)
-                        #print(new_sub_controller.target_temper)
-                        serverqueuelist.append(new_sub_controller)
-                    #print(serverqueue)
-                    #print(serverqueuelist)
-                    return redirect('/administrator/')
-
-
-            if request.POST.get('default_mode') == 'cool':
-                if int(default_temper) < 25 or int(default_temper) > 30:
-                    return render(request, 'set_default.html', {'msg': '请输入正确温度'})
+                if default_mode == 'hot':
+                    mode = 0
                 else:
-                    if default_speed == 'low':
-                        speed = 0
-                    elif default_speed == 'mid':
-                        speed = 1
-                    else:
-                        speed = 2
+                    mode = 1
+                for room_no in range(1,6):
+                    sub_controller.set_default(mode,speed,default_temper,feerateL,feerateM,feerateH)
+                    # sc=models.sub_controller_db()
+                    # sc.room_no=room_no+600
+                    # sc.is_check_in=False
+                    # sc.is_power_on=False
+                    # sc.is_start_up=False
+                    # sc.mode=mode
+                    # sc.speed=speed
+                    # sc.target_temper=default_temper
+                    # sc.current_fee=0
+                    # sc.total_fee=0
+                    # sc.room_no=room_no+600
+                    # sc.temper=0
+                    # sc.feerateL=feerateL
+                    # sc.feerateM=feerateM
+                    # sc.feerateH=feerateH
+                    # sc.default_mode=mode
+                    # sc.default_temper=default_temper
+                    # sc.default_speed=speed
+                    # sc.dur_time=0
+                    # if sc.mode == 0:
+                    #     sc.cur_rate=feerateL
+                    # elif sc.mode ==1:
+                    #     sc.cur_rate=feerateM
+                    # else:
+                    #     sc.cur_rate=feerateH
+                    # sc.save()
+                sclist=models.sub_controller_db.objects.all()
+                for row in sclist:
+                    print(row)
+                return redirect('/administrator/')
 
-                    if default_mode == 'hot':
-                        mode = 0
-                    else:
-                        mode = 1
-                    # print(speed)
-                    # print(mode)
-                    for room_no in range(1, 6):
-                        new_sub_controller = sub_controller.sub_controller(0, mode, speed, default_temper, 0, 0,
-                                                                           room_no + 100)
-                        # print(new_sub_controller.room_no)
-                        serverqueuelist.append(new_sub_controller)
-                    # print(serverqueue)
-                    # print(serverqueuelist)
-                    return redirect('/administrator/')
+            #
+            # if request.POST.get('default_mode') == 'cool':
+            #     if int(default_temper) < 25 or int(default_temper) > 30:
+            #         return render(request, 'set_default.html', {'msg': '请输入正确温度'})
+            #     else:
+            #         if default_speed == 'low':
+            #             speed = 0
+            #         elif default_speed == 'mid':
+            #             speed = 1
+            #         else:
+            #             speed = 2
+            #
+            #         if default_mode == 'hot':
+            #             mode = 0
+            #         else:
+            #             mode = 1
+            #         # print(speed)
+            #         # print(mode)
+            #         for room_no in range(1, 6):
+            #             new_sub_controller = sub_controller.sub_controller(0, mode, speed, default_temper, 0, 0,
+            #                                                                room_no + 100)
+            #             # print(new_sub_controller.room_no)
+            #             serverqueuelist.append(new_sub_controller)
+            #         # print(serverqueue)
+            #         # print(serverqueuelist)
+            #         return redirect('/administrator/')
 
 def login(request):
     if request.method=="GET":
