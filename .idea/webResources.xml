@@ -7,6 +7,8 @@
           <resourceRoots>
             <path value="file://$PROJECT_DIR$/main_controller" />
             <path value="file://$PROJECT_DIR$" />
+            <path value="file://$PROJECT_DIR$/air-condition-system" />
+            <path value="file://$PROJECT_DIR$/air_condition_system" />
           </resourceRoots>
         </entryData>
       </entry>

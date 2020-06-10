@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from main_controller import models
+from air_condition_system import models
 def timer_begin(room_no):
+
     return 0
 
 def get_timer(room_no):
@@ -44,7 +45,11 @@ def ispoweroff():
 
 def set_default(mode,speed,default_temper,feerateL,feerateM,feerateH):
     for room_no in range(1, 6):
-        sc = models.sub_controller_db()
+        res = models.sub_controller_db.objects.filter(room_no=room_no)
+        if res.count() == 0:#如果数据库中暂无该房间的记录：
+            sc = models.sub_controller_db()
+        else:
+            sc = models.sub_controller_db.objects.filter(room_no=room_no)
         sc.room_no = room_no + 600
         sc.is_check_in = False
         sc.is_power_on = False
@@ -63,6 +68,7 @@ def set_default(mode,speed,default_temper,feerateL,feerateM,feerateH):
         sc.default_temper = default_temper
         sc.default_speed = speed
         sc.dur_time = 0
+        print(default_temper)
         if sc.mode == 0:
             sc.cur_rate = feerateL
         elif sc.mode == 1:

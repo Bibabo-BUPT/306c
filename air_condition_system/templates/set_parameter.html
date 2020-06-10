@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>中央空调管理员设置默认值</title>
+</head>
+<script language="JavaScript" type="text/javascript">
+function clearNoNum(obj){   obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+ obj.value = obj.value.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+  obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+}
+</script>
+<body>
+<form action="/administrator/set_parameter/ " method="post">
+    请输入默认温度（如果是制热模式，温度应在18~25℃，如果是制冷模式，温度应在25~30℃）<br>
+    <input type="text" name="default_temp" oninput="value=value.replace(/[^\d]/,'')">℃<br>
+    请输入默认风速<br>
+    <input type="radio" name="default_speed" value="low" checked>low
+    <br>
+    <input type="radio" name="default_speed" value="mid" >mid
+    <br>
+    <input type="radio" name="default_speed" value="high" high>high
+    请输入默认模式<br>
+    <input type="radio" name="mode" value="hot" checked>hot
+    <input type="radio" name="mode" value="cool" >cool
+    <br>
+    请输入温度上限<br>
+    <input type="text" name="top_temp" oninput="value=value.replace(/[^\d]/,'')">℃<br>
+    请输入温度下限<br>
+    <input type="text" name="bottom_temp" oninput="value=value.replace(/[^\d]/,'')">℃<br>
+    请输入计费规则<br>
+    低速风：  <input type="text" name="low_rate" oninput="clearNoNum(this)">元/分钟<br>
+    中速风：  <input type="text" name="mid_rate" oninput="clearNoNum(this)">元/分钟<br>
+    高速风：  <input type="text" name="high_rate" oninput="clearNoNum(this)">元/分钟<br>
+    请输入房间总数<br>
+    房间数：<input typr="text" name="room_num" oninput="value=value.replace(/[^\d]/,'')"><br>
+    请输入服务队列中的房间数<br>
+    服务队列可容纳房间数：<input type="text" name="allow_num" oninput="value=value.replace(/[^\d]/,'')"><br>
+    <button>提交</button><br>
+    {{msg}}
+</form>
+</body>
+</html>

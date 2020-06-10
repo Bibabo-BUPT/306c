@@ -1,19 +1,19 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from main_controller import room
-import customer
-import bill
-import detailed_record
-import daily_record
-import weekly_record
-import main_controller
-import sub_controller
-import screen
-import server_queue
-import dispatch_queue
-import controller
-import detailed_list_customer
-import detailed_list_room
+from air_condition_system import room
+from air_condition_system import customer
+from air_condition_system import bill
+from air_condition_system import detailed_record
+from air_condition_system import daily_record
+from air_condition_system import weekly_record
+from air_condition_system import main_controller
+from air_condition_system import sub_controller
+from air_condition_system import screen
+from air_condition_system import server_queue
+from air_condition_system import dispatch_queue
+from air_condition_system import controller
+from air_condition_system import detailed_list_customer
+from air_condition_system import detailed_list_room
 from . import models
 
 
@@ -25,38 +25,68 @@ serverqueue = server_queue.server_queue(0,serverqueuelist)
 room_num_list=[]#room_num_list是已办理入住的房间列表
 bill_list=[]
 detailed_record_list=[]
-#customer[]=customer.customer(id,room_no,total_fee)
+
 def room(request):
     return render(request,'room.html')
 
-def administrator(request):
-    print(serverqueuelist)
-    return render(request, 'administrator.html',{'serverqueuelist':serverqueuelist})
-
-def power_on_html(request):
-    return render(request,'power_on.html')
-
-def set_default_html(request):
-    if request.method == "GET":
-        return render(request,'set_default.html')
+def login(request):
+    if request.method=="GET":
+        controller.power_on()
+        print("分jie")
+        return render(request,'login.html')
     else:
-        default_temper = request.POST.get('default_temper')
+        print(request.POST)
+        u = request.POST.get('username')
+        p = request.POST.get('password')
+        print(u)
+        print(p)
+        if u =='root' and p =='123':
+            return redirect('/administrator/power_on/')
+        else:
+            return render(request, 'login.html',{'msg':'用户名或密码错误'})
+
+def power_on(request):
+    global set_default_time
+    set_default_time = 0
+    print("11111111")
+    res = models.main_controller_db.objects.filter(id = 1)
+    if res.count() == 0:
+        mc = models.main_controller_db()
+        mc.state = 0 #进入设置状态
+        mc.save()
+    else:
+        res.update(state=0)
+    res = {'code': 200,"message": "","data": {'state': 0}}
+    return render(request, 'power_on.html', res)
+
+def set_parameter(request):
+    if request.method == "GET":
+        print("in get")
+        return render(request,'set_parameter.html')
+    else:
+        print("in post")
+        default_temper = request.POST.get('default_temp')
         default_speed = request.POST.get('default_speed')
-        default_mode = request.POST.get('default_mode')
-        feerateL = request.POST.get('feerateL')
-        feerateM = request.POST.get('feerateM')
-        feerateH = request.POST.get('feerateH')
+        default_mode = request.POST.get('mode')
+        feerateL = request.POST.get('low_rate')
+        feerateM = request.POST.get('mid_rate')
+        feerateH = request.POST.get('high_rate')
+        room_num = request.POST.get('room_num')
+        allow_num = request.POST.get('allow_num')
         global set_default_time
+        print(default_temper)
         if set_default_time == 0:
             set_default_time = set_default_time + 1
-            return render(request, 'set_default.html')
+            print("first time")
+            return render(request, 'set_parameter.html')
         else:
+            print("more time")
             if request.POST.get('default_temper') == '' or request.POST.get('feerateL') == '' or request.POST.get('feerateM') == '' or request.POST.get('feerateH') == '' :
-                return render(request, 'set_default.html',{'msg':'请输入所有信息'})
+                return render(request, 'set_parameter.html',{'msg':'请输入所有信息'})
             if request.POST.get('default_mode') == 'hot' and (int(default_temper) < 18 or int(default_temper) >25) :
-                return render(request, 'set_default.html', {'msg': '请输入正确温度'})
+                return render(request, 'set_parameter.html', {'msg': '请输入正确温度'})
             if request.POST.get('default_mode') == 'cool' and (int(default_temper) < 25 or int(default_temper) > 30):
-                return render(request, 'set_default.html', {'msg': '请输入正确温度'})
+                return render(request, 'set_parameter.html', {'msg': '请输入正确温度'})
             else:
                 if default_speed == 'low':
                     speed = 0
@@ -69,79 +99,19 @@ def set_default_html(request):
                     mode = 0
                 else:
                     mode = 1
-                for room_no in range(1,6):
-                    sub_controller.set_default(mode,speed,default_temper,feerateL,feerateM,feerateH)
-                    # sc=models.sub_controller_db()
-                    # sc.room_no=room_no+600
-                    # sc.is_check_in=False
-                    # sc.is_power_on=False
-                    # sc.is_start_up=False
-                    # sc.mode=mode
-                    # sc.speed=speed
-                    # sc.target_temper=default_temper
-                    # sc.current_fee=0
-                    # sc.total_fee=0
-                    # sc.room_no=room_no+600
-                    # sc.temper=0
-                    # sc.feerateL=feerateL
-                    # sc.feerateM=feerateM
-                    # sc.feerateH=feerateH
-                    # sc.default_mode=mode
-                    # sc.default_temper=default_temper
-                    # sc.default_speed=speed
-                    # sc.dur_time=0
-                    # if sc.mode == 0:
-                    #     sc.cur_rate=feerateL
-                    # elif sc.mode ==1:
-                    #     sc.cur_rate=feerateM
-                    # else:
-                    #     sc.cur_rate=feerateH
-                    # sc.save()
-                sclist=models.sub_controller_db.objects.all()
-                for row in sclist:
-                    print(row)
-                return redirect('/administrator/')
+                sub_controller.set_default(mode,speed,default_temper,feerateL,feerateM,feerateH)
+                main_controller.set_default(mode,speed,default_temper,feerateL,feerateM,feerateH,1,room_num,allow_num)
+                return redirect('/administrator/start_up/')
 
-            #
-            # if request.POST.get('default_mode') == 'cool':
-            #     if int(default_temper) < 25 or int(default_temper) > 30:
-            #         return render(request, 'set_default.html', {'msg': '请输入正确温度'})
-            #     else:
-            #         if default_speed == 'low':
-            #             speed = 0
-            #         elif default_speed == 'mid':
-            #             speed = 1
-            #         else:
-            #             speed = 2
-            #
-            #         if default_mode == 'hot':
-            #             mode = 0
-            #         else:
-            #             mode = 1
-            #         # print(speed)
-            #         # print(mode)
-            #         for room_no in range(1, 6):
-            #             new_sub_controller = sub_controller.sub_controller(0, mode, speed, default_temper, 0, 0,
-            #                                                                room_no + 100)
-            #             # print(new_sub_controller.room_no)
-            #             serverqueuelist.append(new_sub_controller)
-            #         # print(serverqueue)
-            #         # print(serverqueuelist)
-            #         return redirect('/administrator/')
+def start_up(request):
+    return render(request,'start_up.html')
 
-def login(request):
-    if request.method=="GET":
-        return render(request,'login.html')
-    else:
-        print(request.POST)
-        u = request.POST.get('username')
-        p = request.POST.get('password')
-        print(u)
-        print(p)
-        if u =='root' and p =='123':
-            return redirect('/power_on/')
-        else:
-            return render(request, 'login.html',{'msg':'用户名或密码错误'})
+def check_room_state(request):
+    return  render(request,'check_room_state.html')
+
+def power_off(request):
+    print(serverqueuelist)
+    return render(request, 'power_off.html',{'serverqueuelist':serverqueuelist})
 
 #前台的登录
 def reception_login(request):
