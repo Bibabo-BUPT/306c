@@ -8,6 +8,16 @@ from django.utils import timezone
 def set_room(room_no):
     return 0
 
+def set_default_check_room(self,room_num):
+    room_count = models.check_room.objects.aggregate(count=Count('room_no'))
+    if room_count != 0:
+        all_messages=models.check_room.objects.all()
+        all_messages.delete()
+    for i in range(1,room_num+1):
+        mcr = models.check_room()
+        mcr.room_no = i + 600
+        mcr.is_check_in = False
+        mcr.save()
 
 def room_target_temper_alter_amount(mode,time,room_no):
     last_record=models.Record.objects.filter(room=room_no).first()

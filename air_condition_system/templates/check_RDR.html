@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>打印详单</title>
+		<link rel="stylesheet" type="text/css" href="static/css/subpage.css">
+		<script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+		<style type="text/css">
+		   table
+		  {
+		      border-collapse :collapse ;
+			  margin: 0 auto;
+		  }
+		  th,td
+		  {
+		      width:200px;
+		      height:40px;
+		      border :1px solid black;
+		      font-size:12px;
+		      text-align :center;
+		  }
+		 </style>
+	</head>
+	<body>
+		<div id="header">
+		<p>你好，接待员！</p>
+		</div>
+		<div style="background: #87CEFA;overflow:hidden;">
+		<form action="/reception/check_RDR/" method="post">
+		    <h3>请输入房间号</h3>
+		    <input type="number" name="room_num"/>
+		    <br>
+		    <br>
+		    <button>打印详单</button>
+		    <table >
+		        <thead>
+		        <tr>
+		            <th>房间号</th>
+		            <th>风速</th>
+		            <th>费率</th>
+		            <th>请求开始时间</th>
+		            <th>请求结束时间</th>
+		            <th>期间费用</th>
+		        </tr>
+		        </thead>
+				<br/>
+		        <tbody>
+		            {% for detail_obj in data %}
+		            <tr>
+		                <td>{{detail_obj.room_id}}</td>
+		                <td>{{detail_obj.speed}}</td>
+		                <td>{{detail_obj.rate}}</td>
+		                <td>{{detail_obj.start_time}}</td>
+		                <td>{{detail_obj.end_time}}</td>
+		                <td>{{detail_obj.dur_cost}}</td>
+		            </tr>
+		            {% endfor %}
+		        </tbody>
+		    </table>
+		</form>
+		</div>
+	
+	</body>
+</html>

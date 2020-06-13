@@ -111,3 +111,9 @@ class count(models.Model):
     change_temper_time = models.IntegerField(default=0)#改变温度的次数
     change_speed_time = models.IntegerField(default=0)#改变风速的次数
     room_id = models.IntegerField(default=0)
+
+class check_room(models.Model):
+    room_no = models.IntegerField(default=0)  # 房间号
+    is_check_in = models.BooleanField(default=False)  # 房间是否入住，若为false则未入住，若为true则已入住
+    check_in_time = models.CharField(max_length=50, null=True, default=None)  # 入住时间
+    check_out_time = models.CharField(max_length=50, null=True, default=None)  # 退房时间

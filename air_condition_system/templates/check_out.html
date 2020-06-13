@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>办理退房</title>
+		<link rel="stylesheet" type="text/css" href="static/css/subpage.css">
+		<script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+		<p>你好，接待员！</p>
+		</div>
+		<div style="background: #87CEFA;overflow:hidden;">
+		<form action="/reception/check_out/" method="post">
+		    <h3>请输入房间号</h3>
+		    <input type="number" name="room_num"/>
+		    <br>
+		    <br>
+		    <button>办理退房</button>
+            {{msg}}
+		</form>
+		</div>
+
+	</body>
+</html>

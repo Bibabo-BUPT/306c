@@ -39,12 +39,12 @@ urlpatterns = [
     path('administrator/power_off/',views.power_off),
 
     #前台
-    path('reception_login/',views.reception_login),
-    path('reception_print/',views.reception_print),
-    path('reception_check_in/',views.reception_check_in),
-    path('reception_check_out/',views.reception_check_out),
-    path('reception_print_bill/',views.reception_print_bill),
-    path('reception_print_detail/',views.reception_print_detail),
+    #path('reception_login/',views.reception_login),
+    #path('reception_print/',views.reception_print),
+    path('reception/check_in/',views.check_in),
+    path('reception/check_out/',views.check_out),
+    path('reception/check_bill/',views.check_bill),
+    path('reception/check_RDR/',views.check_RDR),
 
     #经理
     path(r'daily_record_manager/', daily_record.print_daily_record),

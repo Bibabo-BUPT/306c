@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>打印账单</title>
+		<link rel="stylesheet" type="text/css" href="static/css/subpage.css">
+		<script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+	</head>
+	<body>
+		<div id="header">
+		<p>你好，接待员！</p>
+		</div>
+		<div style="background: #87CEFA;overflow:hidden;">
+		<form action="/reception/check_bill/" method="post">
+		    <h3>请输入房间号</h3>
+		    <input type="number" name="room_num"/>
+		    <br>
+		    <br>
+		    <button>打印账单</button>
+			<br />
+		    <h3>房间号：{{data.room_id}}</h3>
+		    <h3>入住时间：{{data.check_in_time}}</h3>
+		    <h3>退房时间：{{data.check_out_time}}</h3>
+		    <h3>总费用：{{data.cost}}</h3>
+		</form>	
+		</div>
+	</body>
+</html>
