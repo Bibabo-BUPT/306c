@@ -1,25 +1,39 @@
 from django.shortcuts import render, redirect
 import json
+from . import models
+from django.utils import timezone
 
 
-# class room:
-#     def __init__(self,room_no,temper,customer):
-#         self.room_no=room_no
-#         self.temper=temper
-#         self.customer=customer
 
-
-def set_room(self,room_no):
+def set_room(room_no):
     return 0
 
 
-def room_target_temper_alter_amount(self,mode,time):
+def room_target_temper_alter_amount(mode,time,room_no):
+    last_record=models.Record.objects.filter(room=room_no).first()
+    last_record.update(LeaveDate=timezone.now())
+    last_record.update(Date=(last_record.LeaveDate-last_record.StartDate))
+    obj=models.Record(room=last_record.room,DangDu=mode,Pattern=last_record.Pattern,Speed=last_record.Speed,State=last_record.State,StartDate=timezone.now(),feerate=last_record.feerate)
+    obj.save()
     return 0
 
-def room_speed_alter_amount_plus(self,mode,time):
+def room_speed_alter_amount_plus(mode,time,room_no):
+    last_record = models.Record.objects.filter(room=room_no).first()
+    last_record.update(LeaveDate=timezone.now())
+    last_record.update(Date=(last_record.LeaveDate - last_record.StartDate))
+    feerate=0
+    if mode == 0:
+        feerate=0.33
+    elif mode == 1:
+        feerate=0.5
+    else:
+        feerate=1
+    obj = models.Record(room=last_record.room, DangDu=last_record.DangDu, Pattern=last_record.Pattern, Speed=mode,
+                        State=last_record.State, StartDate=timezone.now(),feerate=feerate)
+    obj.save()
     return 0
 
-def power_off(self,room_no,time):
+def power_off(room_no,time):
     return 0
 
 def create_dlr(self):
@@ -98,9 +112,7 @@ def get_detail_record(room_id, choice):
 
 
 def find_daily_record(request):
-    # print(request.method)
     if request.method == "GET":
-        # print('aaaaaaaaaaaaaaaa')
         return render(request, 'daily_record_room_choice.html')
 
     else:

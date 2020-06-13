@@ -1,15 +1,4 @@
 from air_condition_system import models
-# class dispatch_queue():
-#     def __init__(self,state,dispatchqueue):
-#         self.state=state
-#         self.dispatchqueue=dispatchqueue
-#
-# def in_queue(room_no):#把对应的房间号加入到server_queue_db数据库中，并把对应从控机的状态修改为start_up，并打开相应的计时器
-#     sq = models.server_queue_db()
-#     sq.room_no = room_no
-#     sq.save()
-#     models.sub_controller_db.objects.filter(room_no=room_no).update(is_start_up=True)
-#     return 0
 def in_queue(room_no):
     dq = models.dispatch_queue_db()
     dq.room_no = room_no
